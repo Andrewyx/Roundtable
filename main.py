@@ -2,7 +2,7 @@ from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
+from datetime import date
 
 def get_data(url) -> list:
     browser_options = ChromeOptions()
@@ -26,7 +26,7 @@ def get_data(url) -> list:
             menu.append(food_item)
         if len(menu) > 0:
             day_menu = {
-                f"Day {count}" : menu
+                f"Day {count + 1}" : menu
             }
             data.append(day_menu)
 
@@ -35,9 +35,8 @@ def get_data(url) -> list:
 
 
 def main():
-    data = get_data("https://ubc.nutrislice.com/menu/ubc-gather-place-vanier-residence/gather-place-vanier-residence-lunch/print-menu/month/2023-10-22")
-    for dish in data:
-        print(f"{dish}")
+    data = get_data(f"https://ubc.nutrislice.com/menu/ubc-gather-place-vanier-residence/gather-place-vanier-residence-lunch/print-menu/month/{date.today()}")
+    print(data[date.today().day])
 
 
 if __name__ == '__main__':
