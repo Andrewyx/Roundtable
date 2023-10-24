@@ -4,6 +4,22 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import date
 import pickle
+import pywhatkit
+import os
+
+try:
+    SOME_SECRET = os.environ["SOME_SECRET"]
+except KeyError:
+    SOME_SECRET = "Token N/A"
+
+ListOfRecipients = {
+    "Person1" : 1234567890,
+    "Person2" : 1234567890
+}
+
+def send_to(ListOfNumber, info):
+    for number in ListOfNumber:
+        pywhatkit.sendwhatmsg_instantly(f"+1{ListOfRecipients[number]}", f'Menu Today: \n {str(info)}', 10, tab_close=True)
 
 def get_data(url) -> list:
     browser_options = ChromeOptions()
@@ -36,15 +52,17 @@ def main():
     try:
         file = open("menus.txt", "rb")
         cache = pickle.load(file)
-        print(cache[f"Day {date.today().day}"])
+        print(f'{date.today()}:\n {cache[f"Day {date.today().day}"]}')
+        send_to(ListOfRecipients, cache[f"Day {date.today().day}"])
         file.close()
+
     except Exception as error:
         print(error)
         data = get_data(f"https://ubc.nutrislice.com/menu/ubc-gather-place-vanier-residence/gather-place-vanier-residence-lunch/print-menu/month/{date.today()}")
-        print(data[f"Day {date.today().day}"])
+        print(f'{date.today()}:\n {data[f"Day {date.today().day}"]}')
+        send_to(ListOfRecipients, data[f"Day {date.today().day}"])
         file = open("menus.txt", "wb")
         pickle.dump(data, file)
-
         file.close()
 
 
