@@ -8,13 +8,10 @@ import pywhatkit
 import os
 import ast
 
-try:
-    SOME_SECRET = os.environ["SOME_SECRET"]
-    ListOfRecipients = ast.literal_eval(SOME_SECRET)
-except KeyError:
-    SOME_SECRET = "Token N/A"
-    #add name number pairs below
-    ListOfRecipients = {
+
+ListOfRecipients = {
+***REMOVED***
+    'Daniel':7785366839
     }
 
 def send_to(ListOfNumber, info):
