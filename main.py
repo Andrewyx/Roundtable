@@ -6,16 +6,16 @@ from datetime import date
 import pickle
 import pywhatkit
 import os
+import ast
 
 try:
     SOME_SECRET = os.environ["SOME_SECRET"]
+    ListOfRecipients = ast.literal_eval(SOME_SECRET)
 except KeyError:
     SOME_SECRET = "Token N/A"
-
-ListOfRecipients = {
-    "Person1" : 1234567890,
-    "Person2" : 1234567890
-}
+    #add name number pairs below
+    ListOfRecipients = {
+    }
 
 def send_to(ListOfNumber, info):
     for number in ListOfNumber:
