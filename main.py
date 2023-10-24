@@ -5,12 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from datetime import date
 import pickle
 import pywhatkit
-import os
-import ast
-
 
 ListOfRecipients = {
-***REMOVED***
 ***REMOVED***
     }
 
