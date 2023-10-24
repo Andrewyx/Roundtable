@@ -5,13 +5,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from datetime import date
 import pickle
 import pywhatkit
-import os
-import ast
-
 
 ListOfRecipients = {
-***REMOVED***
-    'Daniel':7785366839
+    'Andrew':7785225315
     }
 
 def send_to(ListOfNumber, info):
