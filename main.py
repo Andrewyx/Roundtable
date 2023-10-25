@@ -6,8 +6,10 @@ from datetime import date
 import pickle
 import pywhatkit
 
+weekno = date.today().weekday()
+
 ListOfRecipients = {
-***REMOVED***
+
     }
 
 def send_to(ListOfNumber, info):
@@ -41,18 +43,33 @@ def get_data(url) -> list:
     return data
 
 
+datefile = open("data.txt", "wr")
+
+currentmonth = datefile.read()
+if currentmonth != date.today().month:
+    datefile.write(f'{date.today().month}')
+
 def main():
+    if weekno == 6:
+        #Updates on Sat
+        data = get_data(f"https://ubc.nutrislice.com/menu/ubc-gather-place-vanier-residence/gather-place-vanier-residence-lunch/print-menu/month/{date.today()}")
+        
+        
+        file = open("menus.txt", "wb")
+        pickle.dump(data, file)
+        file.close()
+
     try:
         file = open("menus.txt", "rb")
         cache = pickle.load(file)
-        print(f'{date.today()}:\n {cache[f"Day {date.today().day}"]}')
+        #print(f'{date.today()}:\n {cache[f"Day {date.today().day}"]}')
         send_to(ListOfRecipients, cache[f"Day {date.today().day}"])
         file.close()
 
     except Exception as error:
         print(error)
         data = get_data(f"https://ubc.nutrislice.com/menu/ubc-gather-place-vanier-residence/gather-place-vanier-residence-lunch/print-menu/month/{date.today()}")
-        print(f'{date.today()}:\n {data[f"Day {date.today().day}"]}')
+        #print(f'{date.today()}:\n {data[f"Day {date.today().day}"]}')
         send_to(ListOfRecipients, data[f"Day {date.today().day}"])
         file = open("menus.txt", "wb")
         pickle.dump(data, file)
