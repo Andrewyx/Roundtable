@@ -161,3 +161,4 @@ cython_debug/
 
 .PyWhatKit_DB.txt
 PyWhatKit_DB.txt
+passwords.txt
