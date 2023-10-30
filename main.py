@@ -14,7 +14,7 @@ ListOfRecipients = {
 
 def send_to(ListOfNumber, info):
     for number in ListOfNumber:
-        pywhatkit.sendwhatmsg_instantly(f"+1{ListOfRecipients[number]}", f'Menu Today: \n {str(info)}', 10, tab_close=True)
+        pywhatkit.sendwhatmsg_instantly(f"+1{ListOfRecipients[number]}", f'Menu Today: \n {str(info)}', 15, tab_close=True)
 
 def get_data(url) -> list:
     browser_options = ChromeOptions()
@@ -42,19 +42,33 @@ def get_data(url) -> list:
     driver.quit()
     return data
 
-
-datefile = open("data.txt", "wr")
-
-currentmonth = datefile.read()
-if currentmonth != date.today().month:
-    datefile.write(f'{date.today().month}')
-
 def main():
+
+    datefile = open("data.txt", "r")
+    if datefile.read() != "":
+        currentmonth = datefile.read()
+        datefile.close()
+        print(currentmonth)
+        #print(str(date.today().month))
+        
+        if str(currentmonth) != str(date.today().month):
+            datefile = open("data.txt", "w")
+            datefile.write(f'{date.today().month}')
+            datefile.close()
+
+            # data = get_data(f"https://ubc.nutrislice.com/menu/ubc-gather-place-vanier-residence/gather-place-vanier-residence-lunch/print-menu/month/{date.today()}")
+            # file = open("menus.txt", "wb")
+            # pickle.dump(data, file)
+            # file.close()
+    else:
+        datefile =  open("data.txt", "w")
+        currentmonth = date.today().month
+        datefile.write(f'{currentmonth}')
+    datefile.close()    
+
     if weekno == 6:
         #Updates on Sat
         data = get_data(f"https://ubc.nutrislice.com/menu/ubc-gather-place-vanier-residence/gather-place-vanier-residence-lunch/print-menu/month/{date.today()}")
-        
-        
         file = open("menus.txt", "wb")
         pickle.dump(data, file)
         file.close()
@@ -74,7 +88,6 @@ def main():
         file = open("menus.txt", "wb")
         pickle.dump(data, file)
         file.close()
-
 
 if __name__ == '__main__':
     main()
