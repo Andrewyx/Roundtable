@@ -8,8 +8,19 @@ import pywhatkit
 
 weekno = date.today().weekday()
 
-ListOfRecipients = {
+firstday = date.today().replace(day=1).weekday()
+print(firstday)
 
+ListOfRecipients = {
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
     }
 
 def send_to(ListOfNumber, info):
@@ -37,7 +48,7 @@ def get_data(url) -> list:
             food_item = dish.get_attribute("textContent").replace("\\n", "").strip()
             menu.append(food_item)
         if len(menu) > 0:
-            data[f'Day {count + 1}'] = menu
+            data[f'Day {count - firstday}'] = menu
 
     driver.quit()
     return data
@@ -83,7 +94,8 @@ def main():
     except Exception as error:
         print(error)
         data = get_data(f"https://ubc.nutrislice.com/menu/ubc-gather-place-vanier-residence/gather-place-vanier-residence-lunch/print-menu/month/{date.today()}")
-        #print(f'{date.today()}:\n {data[f"Day {date.today().day}"]}')
+        print(data)
+        print(f'{date.today()}:\n {data[f"Day {date.today().day}"]}')
         send_to(ListOfRecipients, data[f"Day {date.today().day}"])
         file = open("menus.txt", "wb")
         pickle.dump(data, file)
