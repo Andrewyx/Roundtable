@@ -12,15 +12,7 @@ firstday = date.today().replace(day=1).weekday()
 print(firstday)
 
 ListOfRecipients = {
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
+
     }
 
 def send_to(ListOfNumber, info):
